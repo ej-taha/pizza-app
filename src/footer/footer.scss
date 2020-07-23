@@ -1,0 +1,13 @@
+.app {
+   &__footer {
+     border-radius: 0 0 4px 4px;
+     background: #0f9675;
+     color: #fff;
+     padding: 10px;
+     text-align: center;
+     p {
+       margin: 0;
+       font-weight: 600;
+     }
+   }
+ }
