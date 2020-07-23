@@ -16,6 +16,7 @@ import { Navbar } from './navbar/navbar';
 import { Footer } from './footer/footer';
 import { ProductItem } from './products/containers/product-item/product-item';
 import { Products } from './products/containers/products/products';
+import { PizzaToppings } from './products/components';
 
 const initialState = { pizzas: [] };
 type State = Readonly<typeof initialState>;
@@ -24,7 +25,7 @@ class App extends React.Component<RouteComponentProps, State> {
    readonly state: State = initialState;
 
    async componentDidMount() {
-      const pizzas = (await axios.get('http://localhost:5000/pizzas')).data;
+      const pizzas = (await axios.get('http://localhost:5000/toppings')).data;
       this.setState({ pizzas });
    }
 
@@ -40,9 +41,10 @@ class App extends React.Component<RouteComponentProps, State> {
                <div className='app__content'>
                   <Navbar />
                   <div className='app__container'>
-                     <Route exact={true} path='/' component={Products} />
+                     <PizzaToppings toppings={this.state.pizzas} />
+                     {/* <Route exact={true} path='/' component={Products} />
                      <Route exact={true} path='/products/new' component={ProductItem} />
-                     <Route exact={true} path='/products/:pizzaId' component={ProductItem} />
+                     <Route exact={true} path='/products/:pizzaId' component={ProductItem} /> */}
                   </div>
                   <Footer />
                </div>
