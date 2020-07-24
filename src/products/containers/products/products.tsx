@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './products.scss';
 import { Pizza } from '../../models/pizza';
 import { PizzaItem } from '../../components/pizza-item/pizza-item';
+import { PizzaToppings } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllToppings } from '../../store/selectors/toppings-selectors';
+import { loadToppings, loadPizzas } from '../../store/epics';
+import { getAllPizzas } from '../../store/selectors/pizzas-selectors';
 
 export const Products = () => {
-   const pizzas: Pizza[] = [];
+
+   const dispatch = useDispatch();
+   const pizzas = useSelector(getAllPizzas);
+
+   useEffect(() => {
+      dispatch(loadPizzas());
+
+      console.log('PIZZAS:', pizzas);
+   }, [dispatch]);
 
    return (
       <div className='products'>

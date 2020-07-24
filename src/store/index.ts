@@ -1,15 +1,26 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+import { routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 import logger from 'redux-logger';
 import { ajax } from 'rxjs/ajax';
 import { createEpicMiddleware } from 'redux-observable';
-import { productsReducer, productsEpic } from '../products/store/reducers';
 
+import { productsReducer, productsEpic } from '../products/store/reducers';
+import rootReducer from './reducers';
+
+export const history = createBrowserHistory();
 const epicMiddleware = createEpicMiddleware({ dependencies: { getJSON: ajax.getJSON, post: ajax.post } });
 
 export function configureStore() {
    const store = createStore(
-      productsReducer,
-      applyMiddleware(epicMiddleware, logger)
+      rootReducer(history),
+      compose(
+         applyMiddleware(
+            routerMiddleware(history), // for dispatching history actions
+            epicMiddleware,
+            logger
+         ),
+      ),
    );
 
    epicMiddleware.run(productsEpic);

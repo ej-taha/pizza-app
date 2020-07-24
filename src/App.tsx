@@ -1,16 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { Provider } from 'react-redux';
-import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
-
+import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 import './App.scss';
+
 import Header from './header/header';
-import EssaySubmissionPage from './essays/containers/EssaySubmissionPage';
-import EssayDetailsContainer from './essays/containers/essay_details_container';
-import EssayItem from './essays/components/essay_item';
-import * as fromAuth from './auth';
-import { ProfilePage } from './profile/containers/ProfilePage';
-import { configureStore } from './essays/store/store';
+import { configureStore, history } from './store';
 import { PizzaDisplay } from './products/components/pizza-display/pizza-display';
 import { Navbar } from './navbar/navbar';
 import { Footer } from './footer/footer';
@@ -18,22 +14,10 @@ import { ProductItem } from './products/containers/product-item/product-item';
 import { Products } from './products/containers/products/products';
 import { PizzaToppings } from './products/components';
 
-const initialState = { pizzas: [] };
-type State = Readonly<typeof initialState>;
 
-class App extends React.Component<RouteComponentProps, State> {
-   readonly state: State = initialState;
-
-   async componentDidMount() {
-      const pizzas = (await axios.get('http://localhost:5000/toppings')).data;
-      this.setState({ pizzas });
-   }
+class App extends React.Component {
 
    render() {
-      if (this.state.pizzas.length === 0) {
-         return <div />;
-      }
-      console.log('fooking pizzas:', this.state.pizzas);
       return (
          <Provider store={configureStore()}>
             <div className='app'>
@@ -41,10 +25,14 @@ class App extends React.Component<RouteComponentProps, State> {
                <div className='app__content'>
                   <Navbar />
                   <div className='app__container'>
-                     <PizzaToppings toppings={this.state.pizzas} />
-                     {/* <Route exact={true} path='/' component={Products} />
-                     <Route exact={true} path='/products/new' component={ProductItem} />
-                     <Route exact={true} path='/products/:pizzaId' component={ProductItem} /> */}
+                     {/* <PizzaToppings toppings={this.state.pizzas} /> */}
+                     <ConnectedRouter history={history}>
+                        <Switch>
+                           <Route exact={true} path='/' component={Products} />
+                           <Route exact={true} path='/products/new' component={ProductItem} />
+                           <Route exact={true} path='/products/:pizzaId' component={ProductItem} />
+                        </Switch>
+                     </ConnectedRouter>
                   </div>
                   <Footer />
                </div>
@@ -58,4 +46,4 @@ class App extends React.Component<RouteComponentProps, State> {
    }
 }
 
-export default withRouter(App);
+export default App;
