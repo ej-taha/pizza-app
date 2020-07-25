@@ -6,23 +6,23 @@ export const LOAD_TOPPINGS_FAIL = '[Products] Load Toppings Fail';
 export const LOAD_TOPPINGS_SUCCESS = '[Products] Load Toppings Success';
 export const VISUALISE_TOPPINGS = '[Products] Visualise Toppings';
 
-class LoadToppings implements Action {
-   readonly type: typeof LOAD_TOPPINGS;
+export class LoadToppings implements Action {
+   readonly type = LOAD_TOPPINGS;
 }
 
-class LoadToppingsFail implements Action {
-   readonly type: typeof LOAD_TOPPINGS_FAIL;
-   payload: any;
+export class LoadToppingsFail implements Action {
+   readonly type = LOAD_TOPPINGS_FAIL;
+   constructor(public payload: any) { }
 }
 
-class LoadToppingsSuccess implements Action {
-   readonly type: typeof LOAD_TOPPINGS_SUCCESS;
-   payload: Topping[];
+export class LoadToppingsSuccess implements Action {
+   readonly type = LOAD_TOPPINGS_SUCCESS;
+   constructor(public payload: Topping[]) { }
 }
 
-class VisualiseToppings implements Action {
-   readonly type: typeof VISUALISE_TOPPINGS;
-   payload: number[];
+export class VisualiseToppings implements Action {
+   readonly type = VISUALISE_TOPPINGS;
+   constructor(public payload: number[]) { }
 }
 
 // action types

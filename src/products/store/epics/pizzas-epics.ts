@@ -11,7 +11,7 @@ export const fetchPizzasEpic = (action$, state$, { getJSON }) => {
       ofType(fromActions.LOAD_PIZZAS),
       mergeMap(() =>
          getJSON('http://localhost:5000/pizzas/').pipe(
-            map((response: Pizza[]) => loadPizzasSuccess(response))
+            map((response: Pizza[]) => new fromActions.LoadPizzasSuccess(response))
          )
       )
    );
@@ -26,7 +26,7 @@ export const createPizzaEpic = (action$, state$, { post }) => {
             headers: { 'Content-Type': 'application/json' }
          }
          ).pipe(
-            map(({ response }) => createPizzaSuccess(response.created)),
+            map(({ response }) => new fromActions.CreatePizzaSuccess(response.created)),
             catchError(error => {
                console.log('error: ', error);
                return of(error);
@@ -37,7 +37,7 @@ export const createPizzaEpic = (action$, state$, { post }) => {
 };
 
 //action creators
-export function loadPizzas(): fromActions.PizzasAction {
+/* export function loadPizzas(): fromActions.PizzasAction {
    return {
       type: fromActions.LOAD_PIZZAS
    };
@@ -76,4 +76,4 @@ export function createPizzaFail(error: any): fromActions.PizzasAction {
       type: fromActions.CREATE_PIZZA_FAIL,
       payload: error
    };
-}
+} */

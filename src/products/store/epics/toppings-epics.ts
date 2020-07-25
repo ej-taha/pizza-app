@@ -11,14 +11,14 @@ export const fetchToppingsEpic = (action$, state$, { getJSON }) => {
       ofType(fromActions.LOAD_TOPPINGS),
       mergeMap(() =>
          getJSON('http://localhost:5000/toppings/').pipe(
-            map((response: Topping[]) => loadToppingsSuccess(response))
+            map((response: Topping[]) => new fromActions.LoadToppingsSuccess(response))
          )
       )
    );
 };
 
 //action creators
-export function loadToppings(): fromActions.ToppingsAction {
+/* export function loadToppings(): fromActions.ToppingsAction {
    return {
       type: fromActions.LOAD_TOPPINGS
    };
@@ -36,4 +36,4 @@ export function loadToppingsFail(error: any): fromActions.ToppingsAction {
       type: fromActions.LOAD_TOPPINGS_FAIL,
       payload: error
    };
-}
+} */

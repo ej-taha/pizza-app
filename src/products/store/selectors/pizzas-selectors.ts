@@ -7,7 +7,7 @@ import * as fromToppings from './toppings-selectors';
 import { Pizza } from '../../models/pizza';
 
 export const getPizzaState = state => state.products.pizzas;
-export const getLocation = (state, props) => props.match;
+// export const getLocation = (state, props) => props.match;
 
 export const getPizzasEntities = createSelector(
    getPizzaState,
@@ -16,9 +16,10 @@ export const getPizzasEntities = createSelector(
 
 export const getSelectedPizza = createSelector(
    getPizzasEntities,
-   getLocation,
-   (entities, location): Pizza => {
-      return location && entities[location.params.pizzaId];
+   (entities): Pizza => {
+      console.log('[SELECTOR]', entities);
+      console.log('[SELECTOR]', entities[1]);
+      return entities[1];
    }
 );
 
@@ -28,6 +29,9 @@ export const getPizzaVisualised = createSelector(
    fromToppings.getSelectedToppings,
    (pizza, toppingEntities, selectedToppings) => {
       const toppings = selectedToppings.map(id => toppingEntities[id]);
+      console.log('[SELECTOR] toppingEntities', toppingEntities);
+      console.log('[SELECTOR] selectedToppings', selectedToppings);
+      console.log('[SELECTOR] pizza & toppings', { ...pizza, toppings });
       return { ...pizza, toppings };
    }
 );

@@ -3,7 +3,12 @@ import { createSelector } from 'reselect';
 import * as fromFeature from '../reducers';
 import * as fromToppings from '../reducers/toppings-reducer';
 
-export const getToppingsState = (state: fromFeature.ProductsState) => state.toppings;
+// export const getToppingsState = (state: fromFeature.ProductsState) => state.toppings;
+
+export const getToppingsState = createSelector(
+   fromFeature.getProductsState,
+   (state: fromFeature.ProductsState) => state.toppings
+);
 
 export const getToppingEntities = createSelector(
    getToppingsState,

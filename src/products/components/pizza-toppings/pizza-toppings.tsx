@@ -3,22 +3,27 @@ import classNames from 'classnames';
 import './pizza-toppings.scss';
 import { Topping } from '../../models/topping';
 
-type Props = { toppings: Topping[] };
+type Props = { toppings: Topping[], selectedToppings: Topping[], selected };
 
-export const PizzaToppings = ({ toppings }: Props) => {
-   const [value, setValue] = useState(toppings);
+export const PizzaToppings = ({ toppings, selectedToppings, selected }: Props) => {
+   // const [value, setValue] = useState(selectedToppings);
+   console.log('bloody selected toppings:', selectedToppings);
 
    const selectTopping = (topping: Topping) => {
+      let foo = selectedToppings;
       if (existsInToppings(topping)) {
-         setValue(value.filter(item => item.id !== topping.id));
+         foo = foo.filter(item => item.id !== topping.id);
       } else {
-         setValue([...value, topping]);
+         foo = [...foo, topping];
       }
-      console.log('toppings: ', value);
+      console.log('toppings: ', foo);
+
+      const updatedToppings = foo.map(topping => topping.id);
+      selected(updatedToppings);
    };
 
    const existsInToppings = (topping: Topping) => {
-      return value.some(val => val.id === topping.id);
+      return selectedToppings.some(val => val.id === topping.id);
    };
 
    return (

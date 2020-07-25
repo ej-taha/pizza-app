@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import './pizza-form.scss';
 
 import { Topping } from '../../models/topping';
 import { Pizza } from '../../models/pizza';
 import { PizzaToppings } from '../pizza-toppings/pizza-toppings';
 
-type Props = { pizza: Pizza, toppings: Topping[] };
+type Props = { pizza: Pizza, toppings: Topping[], selected, create, update, remove };
 
-export const PizzaForm = ({ pizza, toppings }: Props) => {
+export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected, create, update, remove, children }) => {
    const exists = false;
+   const [name, setName] = useState(pizza.name);
 
    const createPizza = (pizza) => {
 
@@ -22,6 +23,12 @@ export const PizzaForm = ({ pizza, toppings }: Props) => {
 
    };
 
+   const handleChange = (e) => {
+      setName(e.target.value);
+   };
+
+   console.log('TOPPINGS IN PIZZA FORM', toppings);
+
    return (
       <div className='pizza-form'>
          <form>
@@ -31,14 +38,18 @@ export const PizzaForm = ({ pizza, toppings }: Props) => {
                   type='text'
                   placeholder='e.g. Pepperoni'
                   className='pizza-form__input'
+                  value={name}
+                  onChange={(e) => handleChange(e)}
                />
             </label>
+
+            {children}
 
             <label>
                <h4>Select toppings</h4>
             </label>
             <div className='pizza-form__list'>
-               <PizzaToppings toppings={toppings} />
+               <PizzaToppings toppings={toppings} selectedToppings={pizza.toppings} selected={selected} />
             </div>
             <div className='pizza-form__actions'>
                {

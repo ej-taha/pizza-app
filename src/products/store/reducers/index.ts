@@ -18,4 +18,6 @@ export const productsReducer = combineReducers({
    toppings
 });
 
+export const getProductsState = (state) => state.products;
+
 export type ProductsState = ReturnType<typeof productsReducer>;

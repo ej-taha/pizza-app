@@ -11,12 +11,17 @@ import rootReducer from './reducers';
 export const history = createBrowserHistory();
 const epicMiddleware = createEpicMiddleware({ dependencies: { getJSON: ajax.getJSON, post: ajax.post } });
 
+const customMiddleWare = store => next => action => {
+   next({ ...action });
+};
+
 export function configureStore() {
    const store = createStore(
       rootReducer(history),
       compose(
          applyMiddleware(
             routerMiddleware(history), // for dispatching history actions
+            customMiddleWare,
             epicMiddleware,
             logger
          ),
