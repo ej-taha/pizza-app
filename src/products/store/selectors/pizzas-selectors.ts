@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { matchPath } from 'react-router-dom';
 
 import * as fromRoot from '../../../store/reducers';
 import * as fromFeature from '../reducers';
@@ -7,7 +8,7 @@ import * as fromToppings from './toppings-selectors';
 import { Pizza } from '../../models/pizza';
 
 export const getPizzaState = state => state.products.pizzas;
-// export const getLocation = (state, props) => props.match;
+export const getRouterState = (state) => state.router;
 
 export const getPizzasEntities = createSelector(
    getPizzaState,
@@ -16,10 +17,14 @@ export const getPizzasEntities = createSelector(
 
 export const getSelectedPizza = createSelector(
    getPizzasEntities,
-   (entities): Pizza => {
-      console.log('[SELECTOR]', entities);
-      console.log('[SELECTOR]', entities[1]);
-      return entities[1];
+   getRouterState,
+   (entities, router): Pizza => {
+      const match: any = matchPath(
+         router.location.pathname,
+         { path: '/products/:pizzaId' }
+      );
+      const id = match?.params.pizzaId;
+      return router && entities[id];
    }
 );
 

@@ -29,8 +29,8 @@ class App extends React.Component {
                      <ConnectedRouter history={history}>
                         <Switch>
                            <Route exact={true} path='/' component={Products} />
-                           <Route exact={true} path='/products/new' component={ProductItem} />
-                           <Route exact={true} path='/products/:pizzaId' component={ProductItem} />
+                           <Route key='new-pizza' exact={true} path='/products/new' component={ProductItem} />
+                           <Route key='pizza-item' exact={true} path='/products/:pizzaId' component={ProductItem} />
                         </Switch>
                      </ConnectedRouter>
                   </div>

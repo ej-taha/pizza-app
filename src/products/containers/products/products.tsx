@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of, from } from 'rxjs';
@@ -15,8 +16,6 @@ export const Products = () => {
 
    const dispatchPizzas = useDispatch();
    const dispatchToppings = useDispatch();
-   const foo = useSelector(getPizzaVisualised);
-   const bar = useSelector(getSelectedPizza);
    const pizzas = useSelector(getAllPizzas);
 
    useEffect(() => {
@@ -28,11 +27,12 @@ export const Products = () => {
    return (
       <div className='products'>
          <div className='products__new'>
-            <a
+            <Link
                className='btn btn__ok'
-               href='/products/new'>
+               to={`/products/new`}
+            >
                New Pizza
-            </a>
+            </Link>
          </div>
          <div className='products__list'>
             {

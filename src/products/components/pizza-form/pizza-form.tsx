@@ -1,18 +1,20 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import './pizza-form.scss';
 
 import { Topping } from '../../models/topping';
 import { Pizza } from '../../models/pizza';
 import { PizzaToppings } from '../pizza-toppings/pizza-toppings';
 
-type Props = { pizza: Pizza, toppings: Topping[], selected, create, update, remove };
+type Props = { pizza: Pizza, toppings: Topping[], selected, create: (pizza: Pizza) => void, update, remove };
 
 export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected, create, update, remove, children }) => {
-   const exists = false;
+   const [exists, setExists] = useState(false);
    const [name, setName] = useState(pizza.name);
 
-   const createPizza = (pizza) => {
-
+   const createPizza = () => {
+      const foo = { ...pizza, name, id: 4 };
+      console.log('FOO', foo);
+      create(foo);
    };
 
    const updatePizza = (pizza) => {
@@ -23,11 +25,24 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
 
    };
 
+   const checkIfPizzaExists = () => {
+      console.log('CHECK PIZZA', pizza);
+      if (pizza && pizza.id) {
+         console.log('BLOODY TRUUUUUE');
+         setExists(true);
+      }
+   };
+
    const handleChange = (e) => {
       setName(e.target.value);
    };
 
+   useEffect(() => {
+      checkIfPizzaExists();
+   });
+
    console.log('TOPPINGS IN PIZZA FORM', toppings);
+   console.log('EXISTS', exists);
 
    return (
       <div className='pizza-form'>
@@ -57,7 +72,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
                   <button
                      type='button'
                      className='btn btn__ok'
-                     onClick={() => createPizza({})}
+                     onClick={() => createPizza()}
                   >
                      Create Pizza
                   </button>
@@ -79,7 +94,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
                      className='btn btn__warning'
                      onClick={() => removePizza({})}
                   >
-                     Save changes
+                     Delete Pizza
                   </button>
                }
             </div>

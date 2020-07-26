@@ -10,6 +10,7 @@ import { RootState } from '../../../store/reducers';
 
 export const productsEpic = combineEpics(
    fromEpics.fetchPizzasEpic,
+   fromEpics.createPizzaEpic,
    fromEpics.fetchToppingsEpic
 );
 

@@ -26,7 +26,7 @@ export const createPizzaEpic = (action$, state$, { post }) => {
             headers: { 'Content-Type': 'application/json' }
          }
          ).pipe(
-            map(({ response }) => new fromActions.CreatePizzaSuccess(response.created)),
+            map(({ response }) => { console.log('RESPONSE', response); new fromActions.CreatePizzaSuccess(response); }),
             catchError(error => {
                console.log('error: ', error);
                return of(error);
