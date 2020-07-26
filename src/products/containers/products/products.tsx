@@ -41,7 +41,7 @@ export const Products = () => {
             }
             {pizzas.map(pizza => {
                return (
-                  <PizzaItem key={pizza.id} pizza={pizza} />
+                  <PizzaItem key={pizza._id} pizza={pizza} />
                );
             })}
          </div>

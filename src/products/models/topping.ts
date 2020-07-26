@@ -1,5 +1,5 @@
 export interface Topping {
-   id?: number;
+   _id?: string;
    name?: string;
    [key: string]: any;
 }

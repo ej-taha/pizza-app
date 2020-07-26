@@ -12,7 +12,13 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
    const [name, setName] = useState(pizza.name);
 
    const createPizza = () => {
-      const foo = { ...pizza, name, id: 4 };
+      const foo = { ...pizza, name };
+      const dummy = {
+         name: 'dummy pizza',
+         toppings: [{
+            name: 'dummy topping'
+         }]
+      };
       console.log('FOO', foo);
       create(foo);
    };
@@ -27,7 +33,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
 
    const checkIfPizzaExists = () => {
       console.log('CHECK PIZZA', pizza);
-      if (pizza && pizza.id) {
+      if (pizza && pizza._id) {
          console.log('BLOODY TRUUUUUE');
          setExists(true);
       }

@@ -22,7 +22,7 @@ export class LoadToppingsSuccess implements Action {
 
 export class VisualiseToppings implements Action {
    readonly type = VISUALISE_TOPPINGS;
-   constructor(public payload: number[]) { }
+   constructor(public payload: string[]) { }
 }
 
 // action types

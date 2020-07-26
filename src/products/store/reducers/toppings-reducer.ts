@@ -2,10 +2,10 @@ import * as fromActions from '../actions/toppings-actions';
 import { Topping } from '../../models/topping';
 
 export interface ToppingsState {
-   entities: { [id: number]: Topping };
+   entities: { [id: string]: Topping };
    loaded: boolean;
    loading: boolean;
-   selectedToppings: number[];
+   selectedToppings: string[];
 }
 
 export const initialState: ToppingsState = {
@@ -37,10 +37,10 @@ export default function reducer(state = initialState, action: fromActions.Toppin
          const toppings = action.payload;
 
          const entities = toppings.reduce(
-            (entities: { [id: number]: Topping }, topping: Topping) => {
+            (entities: { [id: string]: Topping }, topping: Topping) => {
                return {
                   ...entities,
-                  [topping.id]: topping,
+                  [topping._id]: topping,
                };
             },
             {

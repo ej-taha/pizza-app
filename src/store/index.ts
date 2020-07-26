@@ -9,7 +9,7 @@ import { productsReducer, productsEpic } from '../products/store/reducers';
 import rootReducer from './reducers';
 
 export const history = createBrowserHistory();
-const epicMiddleware = createEpicMiddleware({ dependencies: { getJSON: ajax.getJSON, post: ajax.post } });
+const epicMiddleware = createEpicMiddleware({ dependencies: { ajax } });
 
 const customMiddleWare = store => next => action => {
    next({ ...action });

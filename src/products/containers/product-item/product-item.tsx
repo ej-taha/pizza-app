@@ -5,6 +5,7 @@ import './product-item.scss';
 import * as fromStore from '../../store';
 import { Pizza } from '../../models/pizza';
 import { PizzaForm, PizzaDisplay } from '../../components';
+import { Topping } from '../../models/topping';
 
 
 export const ProductItem = () => {
@@ -14,7 +15,7 @@ export const ProductItem = () => {
    const toppings = useSelector(fromStore.getAllToppings);
    const visualise = useSelector(fromStore.getPizzaVisualised);
 
-   const onSelect = (event: number[]) => {
+   const onSelect = (event: string[]) => {
       dispatch(new fromStore.VisualiseToppings(event));
    };
 
@@ -36,7 +37,7 @@ export const ProductItem = () => {
    useEffect(() => {
       const pizzaExists = !!(pizza && pizza.toppings);
       const mappedToppings = pizzaExists
-         ? pizza.toppings.map(topping => topping.id)
+         ? pizza.toppings.map((topping: Topping) => topping._id)
          : [];
       dispatch(new fromStore.VisualiseToppings(mappedToppings));
 

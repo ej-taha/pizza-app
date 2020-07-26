@@ -6,11 +6,11 @@ import * as fromActions from '../actions/toppings-actions';
 import { Topping } from '../../models/topping';
 
 
-export const fetchToppingsEpic = (action$, state$, { getJSON }) => {
+export const fetchToppingsEpic = (action$, state$, { ajax }) => {
    return action$.pipe(
       ofType(fromActions.LOAD_TOPPINGS),
       mergeMap(() =>
-         getJSON('http://localhost:5000/toppings/').pipe(
+         ajax.getJSON('http://localhost:8081/api/toppings/').pipe(
             map((response: Topping[]) => new fromActions.LoadToppingsSuccess(response))
          )
       )

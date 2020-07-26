@@ -1,40 +1,75 @@
 import { ofType } from 'redux-observable';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import axios from 'axios';
 
 import * as fromActions from '../actions/pizzas-actions';
 import { Pizza } from '../../models/pizza';
 
 
-export const fetchPizzasEpic = (action$, state$, { getJSON }) => {
+export const fetchPizzasEpic = (action$, state$, { ajax }) => {
    return action$.pipe(
       ofType(fromActions.LOAD_PIZZAS),
       mergeMap(() =>
-         getJSON('http://localhost:5000/pizzas/').pipe(
+         ajax.getJSON('http://localhost:8081/api/pizzas/').pipe(
             map((response: Pizza[]) => new fromActions.LoadPizzasSuccess(response))
          )
       )
    );
 };
 
-export const createPizzaEpic = (action$, state$, { post }) => {
+/* export const createPizzaEpic = (action$, state$, { post }) => {
    console.log('bloody here');
    return action$.pipe(
       ofType(fromActions.CREATE_PIZZA),
       mergeMap((action: any) =>
-         post('http://localhost:5000/pizzas/', action.payload, {
-            headers: { 'Content-Type': 'application/json' }
+         post('http://localhost:8081/api/pizzas/', action.payload, {
+            headers: { 'Content-Type': 'application/json' },
+            
          }
          ).pipe(
-            map(({ response }) => { console.log('RESPONSE', response); new fromActions.CreatePizzaSuccess(response); }),
+            map(({ response }) => { console.log('RESPONSE', response); new fromActions.CreatePizzaSuccess(response.created); }),
             catchError(error => {
-               console.log('error: ', error);
-               return of(error);
+               return of(new fromActions.CreatePizzaFail(error));
+            })
+         )
+      )
+   );
+}; */
+
+export const createPizzaEpic = (action$, state$, { ajax }) => {
+   console.log('bloody here');
+   return action$.pipe(
+      ofType(fromActions.CREATE_PIZZA),
+      mergeMap((action: any) =>
+         ajax({
+            url: 'http://localhost:8081/api/pizzas/',
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: action.payload
+         }).pipe(
+            map(({ response }) => new fromActions.CreatePizzaSuccess(response.created)),
+            catchError(error => {
+               return of(new fromActions.CreatePizzaFail(error));
             })
          )
       )
    );
 };
+
+/* export const createPizzaEpic = (action$, state$, { post }) => {
+   console.log('bloody here');
+   return action$.pipe(
+      ofType(fromActions.CREATE_PIZZA),
+      mergeMap((action: any) =>
+         axios.post('http://localhost:8081/api/pizzas/', action.payload, {
+            headers: { 'Content-Type': 'application/json' }
+         })
+      )
+   );
+}; */
 
 //action creators
 /* export function loadPizzas(): fromActions.PizzasAction {

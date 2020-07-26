@@ -33,7 +33,7 @@ export const getPizzaVisualised = createSelector(
    fromToppings.getToppingEntities,
    fromToppings.getSelectedToppings,
    (pizza, toppingEntities, selectedToppings) => {
-      const toppings = selectedToppings.map(id => toppingEntities[id]);
+      const toppings = selectedToppings.map(id => { console.log('mapped IDs:', id); return toppingEntities[id]; });
       console.log('[SELECTOR] toppingEntities', toppingEntities);
       console.log('[SELECTOR] selectedToppings', selectedToppings);
       console.log('[SELECTOR] pizza & toppings', { ...pizza, toppings });
@@ -43,7 +43,7 @@ export const getPizzaVisualised = createSelector(
 
 export const getAllPizzas = createSelector(getPizzasEntities,
    entities => {
-      return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
+      return Object.keys(entities).map(id => entities[id]);
    }
 );
 

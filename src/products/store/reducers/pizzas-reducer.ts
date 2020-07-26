@@ -2,7 +2,7 @@ import * as fromActions from '../actions/pizzas-actions';
 import { Pizza } from '../../models/pizza';
 
 export interface PizzaState {
-   entities: { [id: number]: Pizza };
+   entities: { [id: string]: Pizza };
    loaded: boolean;
    loading: boolean;
 }
@@ -26,10 +26,10 @@ export default function reducer(state = initialState, action: fromActions.Pizzas
          const pizzas = action.payload;
 
          const entities = pizzas.reduce(
-            (entities: { [id: number]: Pizza }, pizza: Pizza) => {
+            (entities: { [id: string]: Pizza }, pizza: Pizza) => {
                return {
                   ...entities,
-                  [pizza.id]: pizza,
+                  [pizza._id]: pizza,
                };
             },
             {
@@ -57,7 +57,7 @@ export default function reducer(state = initialState, action: fromActions.Pizzas
          const pizza = action.payload;
          const entities = {
             ...state.entities,
-            [pizza.id]: pizza,
+            [pizza._id]: pizza,
          };
 
          return {

@@ -9,7 +9,7 @@ type Props = { pizza: Pizza };
 export const PizzaItem = ({ pizza }: Props) => {
    return (
       <div className='pizza-item'>
-         <Link to={`/products/${pizza.id}`}>
+         <Link to={`/products/${pizza._id}`}>
             <PizzaDisplay pizza={pizza} />
             <h4>{pizza.name}</h4>
             <button type='button' className='btn btn__ok'>
