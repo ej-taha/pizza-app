@@ -1,44 +1,43 @@
 import React from 'react';
-import axios from 'axios';
 import { Provider } from 'react-redux';
-import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 import './App.scss';
 
-import Header from './header/header';
-import { configureStore, history } from './store';
-import { PizzaDisplay } from './products/components/pizza-display/pizza-display';
-import { Navbar } from './navbar/navbar';
-import { Footer } from './footer/footer';
-import { ProductItem } from './products/containers/product-item/product-item';
-import { Products } from './products/containers/products/products';
-import { PizzaToppings } from './products/components';
 
+import * as appComponents from './app/components';
+import * as productsComponents from './products/containers';
+import { history, StoreConfig } from './app/store';
+import { PizzasService } from './products/services/pizzas-service';
+import { ToppingsService } from './products/services';
+
+const pizzasService = container.resolve(PizzasService);
+const toppingssService = container.resolve(ToppingsService);
+const store = (new StoreConfig(pizzasService, toppingssService)).configureStore();
 
 class App extends React.Component {
 
    render() {
       return (
-         <Provider store={configureStore()}>
+         <Provider store={store}>
             <div className='app'>
-               <Header />
+               <appComponents.Header />
                <div className='app__content'>
-                  <Navbar />
-                  <div className='app__container'>
-                     {/* <PizzaToppings toppings={this.state.pizzas} /> */}
-                     <ConnectedRouter history={history}>
+                  <ConnectedRouter history={history}>
+                     <appComponents.Navbar />
+                     <div className='app__container'>
                         <Switch>
-                           <Route exact={true} path='/' component={Products} />
-                           <Route key='new-pizza' exact={true} path='/products/new' component={ProductItem} />
-                           <Route key='pizza-item' exact={true} path='/products/:pizzaId' component={ProductItem} />
+                           <Route exact={true} path='/products' component={productsComponents.Products} />
+                           <Route key='new-pizza' exact={true} path='/products/new' component={productsComponents.ProductItem} />
+                           <Route key='pizza-item' exact={true} path='/products/:pizzaId' component={productsComponents.ProductItem} />
+                           <Route key='home' exact={true} path='/' component={productsComponents.Products} />
                         </Switch>
-                     </ConnectedRouter>
-                  </div>
-                  <Footer />
+                     </div>
+                     <appComponents.Footer />
+                  </ConnectedRouter>
                </div>
-               {/* <Route exact={true} path='/pizza' component={PizzaDisplay} />
-               <Route exact={true} path='/profile' component={ProfilePage} />
-               <Route exact={true} path='/essays/:essayId' component={EssayDetailsContainer} /> */}
             </div>
          </Provider>
 

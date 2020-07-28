@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { mergeMap, map, catchError, tap } from 'rxjs/operators';
-import { of, from } from 'rxjs';
 import './products.scss';
 
-import { Pizza } from '../../models/pizza';
 import { PizzaItem } from '../../components/pizza-item/pizza-item';
-import { PizzaToppings } from '../../components';
-import { getAllToppings } from '../../store/selectors/toppings-selectors';
-import { getAllPizzas, getPizzaVisualised, getSelectedPizza } from '../../store/selectors/pizzas-selectors';
+import { getAllPizzas } from '../../store/selectors/pizzas-selectors';
 import { LoadPizzas, LoadToppings } from '../../store';
 
 export const Products = () => {

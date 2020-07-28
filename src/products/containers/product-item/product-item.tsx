@@ -41,7 +41,7 @@ export const ProductItem = () => {
          : [];
       dispatch(new fromStore.VisualiseToppings(mappedToppings));
 
-   }, [dispatch]);
+   }, [dispatch, pizza]);
 
    console.log('[PRODUCT ITEM] PIZZA', pizza);
    console.log('[PRODUCT ITEM] TOPPINGS', toppings);

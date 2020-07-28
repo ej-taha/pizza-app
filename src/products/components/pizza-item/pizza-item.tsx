@@ -16,9 +16,6 @@ export const PizzaItem = ({ pizza }: Props) => {
                View Pizza
             </button>
          </Link>
-         {/* <a href={`/products/${pizza.id}`}>
-            
-         </a> */}
       </div>
    );
 };

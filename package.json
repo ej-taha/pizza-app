@@ -12,6 +12,7 @@
       "customize-cra": "^0.9.1",
       "dotenv": "^8.2.0",
       "history": "4.10.1",
+      "inversify": "^5.0.1",
       "node-sass": "^4.14.1",
       "react": "^16.13.1",
       "react-app-rewired": "^2.1.6",
@@ -25,11 +26,13 @@
       "redux-observable": "^1.2.0",
       "redux-promise-middleware": "^6.1.2",
       "redux-thunk": "^2.3.0",
+      "reflect-metadata": "^0.1.13",
       "reselect": "^4.0.0",
       "rxjs": "^6.5.5",
       "tslint": "^6.1.2",
       "tslint-config-prettier": "^1.18.0",
       "tslint-react": "^5.0.0",
+      "tsyringe": "^4.3.0",
       "typescript": "^3.9.2"
    },
    "devDependencies": {

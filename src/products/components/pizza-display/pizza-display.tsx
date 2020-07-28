@@ -9,10 +9,10 @@ export const PizzaDisplay = ({ pizza }: Props) => {
    return (
       <div className='pizza-display'>
          <div className='pizza-display__base'>
-            <img src={process.env.PUBLIC_URL + '/img/pizza.svg'} />
+            <img alt='' src={process.env.PUBLIC_URL + '/img/pizza.svg'} />
             {pizza.toppings.map(topping => {
                return (
-                  <img key={topping._id}
+                  <img alt='' key={topping._id}
                      src={process.env.PUBLIC_URL + '/img/toppings/' + topping.name + '.svg'}
                      style={{ zIndex: x++ }}
                      className='pizza-display__topping'

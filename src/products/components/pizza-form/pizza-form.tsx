@@ -5,30 +5,35 @@ import { Topping } from '../../models/topping';
 import { Pizza } from '../../models/pizza';
 import { PizzaToppings } from '../pizza-toppings/pizza-toppings';
 
-type Props = { pizza: Pizza, toppings: Topping[], selected, create: (pizza: Pizza) => void, update, remove };
+type Props = {
+   pizza: Pizza,
+   toppings: Topping[],
+   selected: (selectedToppings: string[]) => void,
+   create: (pizza: Pizza) => void,
+   update: (pizza: Pizza) => void,
+   remove: (pizza: Pizza) => void
+};
 
 export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected, create, update, remove, children }) => {
    const [exists, setExists] = useState(false);
    const [name, setName] = useState(pizza.name);
 
    const createPizza = () => {
-      const foo = { ...pizza, name };
-      const dummy = {
-         name: 'dummy pizza',
-         toppings: [{
-            name: 'dummy topping'
-         }]
-      };
-      console.log('FOO', foo);
-      create(foo);
+      const pizzaToCreate = { ...pizza, name };
+      console.log('FOO', pizzaToCreate);
+      create(pizzaToCreate);
    };
 
-   const updatePizza = (pizza) => {
-
+   const updatePizza = () => {
+      const pizzaToUpdate = { ...pizza, name };
+      console.log('FOO', pizzaToUpdate);
+      update(pizzaToUpdate);
    };
 
-   const removePizza = (pizza) => {
-
+   const removePizza = () => {
+      const pizzaToUpdate = { ...pizza, name };
+      console.log('FOO', pizzaToUpdate);
+      remove(pizzaToUpdate);
    };
 
    const checkIfPizzaExists = () => {
@@ -39,7 +44,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
       }
    };
 
-   const handleChange = (e) => {
+   const handleNameChange = (e) => {
       setName(e.target.value);
    };
 
@@ -60,7 +65,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
                   placeholder='e.g. Pepperoni'
                   className='pizza-form__input'
                   value={name}
-                  onChange={(e) => handleChange(e)}
+                  onChange={(e) => handleNameChange(e)}
                />
             </label>
 
@@ -88,7 +93,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
                   <button
                      type='button'
                      className='btn btn__ok'
-                     onClick={() => updatePizza({})}
+                     onClick={() => updatePizza()}
                   >
                      Save changes
                   </button>
@@ -98,7 +103,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
                   <button
                      type='button'
                      className='btn btn__warning'
-                     onClick={() => removePizza({})}
+                     onClick={() => removePizza()}
                   >
                      Delete Pizza
                   </button>

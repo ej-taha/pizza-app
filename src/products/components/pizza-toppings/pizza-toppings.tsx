@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
+import React from 'react';
 import './pizza-toppings.scss';
 import { Topping } from '../../models/topping';
 
@@ -35,7 +34,7 @@ export const PizzaToppings = ({ toppings, selectedToppings, selected }: Props) =
                   className={`pizza-toppings-item ${existsInToppings(topping) ? 'active' : ''}`}
                   onClick={() => selectTopping(topping)}
                >
-                  <img src={process.env.PUBLIC_URL + '/img/toppings/singles/' + topping.name + '.svg'} />
+                  <img alt='' src={process.env.PUBLIC_URL + '/img/toppings/singles/' + topping.name + '.svg'} />
                   {topping.name}
                </div>
             );

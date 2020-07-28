@@ -1,8 +1,6 @@
 import { createSelector } from 'reselect';
 import { matchPath } from 'react-router-dom';
 
-import * as fromRoot from '../../../store/reducers';
-import * as fromFeature from '../reducers';
 import * as fromPizzas from '../reducers/pizzas-reducer';
 import * as fromToppings from './toppings-selectors';
 import { Pizza } from '../../models/pizza';

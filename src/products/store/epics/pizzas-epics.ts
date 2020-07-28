@@ -1,22 +1,36 @@
 import { ofType } from 'redux-observable';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { push } from 'connected-react-router';
+import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import axios from 'axios';
 
 import * as fromActions from '../actions/pizzas-actions';
 import { Pizza } from '../../models/pizza';
+import { PizzasService } from '../../services';
 
 
-export const fetchPizzasEpic = (action$, state$, { ajax }) => {
+export const fetchPizzasEpic = (action$, state$, { pizzasService }: { pizzasService: PizzasService }) => {
+   return action$.pipe(
+      ofType(fromActions.LOAD_PIZZAS),
+      switchMap(() => {
+         return pizzasService
+            .getPizzas()
+            .pipe(
+               map((response: Pizza[]) => new fromActions.LoadPizzasSuccess(response)),
+               catchError(error => of(new fromActions.LoadPizzasFail(error)))
+            );
+      })
+   );
+};
+/* export const fetchPizzasEpic = (action$, state$, { services }) => {
    return action$.pipe(
       ofType(fromActions.LOAD_PIZZAS),
       mergeMap(() =>
-         ajax.getJSON('http://localhost:8081/api/pizzas/').pipe(
+         ajax.getJSON('https://whispering-atoll-09064.herokuapp.com/api/pizzas/').pipe(
             map((response: Pizza[]) => new fromActions.LoadPizzasSuccess(response))
          )
       )
    );
-};
+}; */
 
 /* export const createPizzaEpic = (action$, state$, { post }) => {
    console.log('bloody here');
@@ -37,78 +51,28 @@ export const fetchPizzasEpic = (action$, state$, { ajax }) => {
    );
 }; */
 
-export const createPizzaEpic = (action$, state$, { ajax }) => {
-   console.log('bloody here');
+export const createPizzaEpic = (action$, state$, { pizzasService }: { pizzasService: PizzasService }) => {
    return action$.pipe(
       ofType(fromActions.CREATE_PIZZA),
-      mergeMap((action: any) =>
-         ajax({
-            url: 'http://localhost:8081/api/pizzas/',
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: action.payload
-         }).pipe(
-            map(({ response }) => new fromActions.CreatePizzaSuccess(response.created)),
-            catchError(error => {
-               return of(new fromActions.CreatePizzaFail(error));
-            })
-         )
+      switchMap((action: any) =>
+         pizzasService
+            .createPizza(action.payload)
+            .pipe(
+               map(({ response }) => new fromActions.CreatePizzaSuccess(response)),
+               tap(foo => state$.subscribe(x => console.log(x))),
+               catchError(error => of(new fromActions.CreatePizzaFail(error)))
+            )
       )
    );
 };
 
-/* export const createPizzaEpic = (action$, state$, { post }) => {
-   console.log('bloody here');
+export const createPizzaEpicSuccess = (action$, state$) => {
+   action$.subscribe(val => console.log('CREATEPIZZASUCCESS EPIC', val));
    return action$.pipe(
-      ofType(fromActions.CREATE_PIZZA),
-      mergeMap((action: any) =>
-         axios.post('http://localhost:8081/api/pizzas/', action.payload, {
-            headers: { 'Content-Type': 'application/json' }
-         })
-      )
+      ofType(fromActions.CREATE_PIZZA_SUCCESS),
+      map((action: fromActions.CreatePizzaSuccess) => action.payload),
+      map((pizza: Pizza) => {
+         return push(`/products`);
+      })
    );
-}; */
-
-//action creators
-/* export function loadPizzas(): fromActions.PizzasAction {
-   return {
-      type: fromActions.LOAD_PIZZAS
-   };
-}
-
-export function loadPizzasSuccess(payload: Pizza[]): fromActions.PizzasAction {
-   return {
-      type: fromActions.LOAD_PIZZAS_SUCCESS,
-      payload
-   };
-}
-
-export function loadPizzasFail(error: any): fromActions.PizzasAction {
-   return {
-      type: fromActions.LOAD_PIZZAS_FAIL,
-      payload: error
-   };
-}
-
-export const createPizza = (payload: Pizza) => {
-   return {
-      type: fromActions.CREATE_PIZZA,
-      payload
-   };
 };
-
-export function createPizzaSuccess(payload: Pizza): fromActions.PizzasAction {
-   return {
-      type: fromActions.CREATE_PIZZA_SUCCESS,
-      payload
-   };
-}
-
-export function createPizzaFail(error: any): fromActions.PizzasAction {
-   return {
-      type: fromActions.CREATE_PIZZA_FAIL,
-      payload: error
-   };
-} */
