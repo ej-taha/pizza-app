@@ -7,7 +7,8 @@ import { createEpicMiddleware } from 'redux-observable';
 import { productsEpic } from '../../products/store/reducers';
 import rootReducer from './reducers';
 import { PizzasService, ToppingsService } from '../../products/services';
-
+import { loadState, saveState } from './local-storage';
+import throttle from 'lodash.throttle';
 export const history = createBrowserHistory();
 
 export class StoreConfig {
@@ -32,6 +33,7 @@ export class StoreConfig {
       const epicMiddleware = this.getEpicMiddleware();
       const store = createStore(
          rootReducer(history),
+         loadState(),
          compose(
             applyMiddleware(
                routerMiddleware(history), // for dispatching history actions
@@ -43,6 +45,13 @@ export class StoreConfig {
       );
 
       epicMiddleware.run(productsEpic);
+
+      store.subscribe(throttle(() => {
+         saveState({
+            router: store.getState().router,
+            products: store.getState().products
+         });
+      }, 1000));
 
       return store;
    }

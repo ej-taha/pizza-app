@@ -3,15 +3,10 @@ import { combineEpics } from 'redux-observable';
 
 import pizzas from './pizzas-reducer';
 import toppings from './toppings-reducer';
+import { epics } from '../epics';
 import * as fromEpics from '../epics';
 
-
-export const productsEpic = combineEpics(
-   fromEpics.fetchPizzasEpic,
-   fromEpics.createPizzaEpic,
-   fromEpics.createPizzaEpicSuccess,
-   fromEpics.fetchToppingsEpic
-);
+export const productsEpic = combineEpics(...Object.values(epics));
 
 export const productsReducer = combineReducers({
    pizzas,

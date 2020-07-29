@@ -1,9 +1,14 @@
-import { fetchPizzasEpic } from './pizzas-epics';
+import { fetchPizzasEpic, createPizzaEpic, createPizzaSuccessEpic, updatePizzaEpic, removePizzaEpic, handlePizzaSuccessEpic } from './pizzas-epics';
 import { fetchToppingsEpic } from './toppings-epics';
 
 export const epics = [
    fetchPizzasEpic,
-   fetchToppingsEpic
+   fetchToppingsEpic,
+   createPizzaEpic,
+   createPizzaSuccessEpic,
+   updatePizzaEpic,
+   removePizzaEpic,
+   handlePizzaSuccessEpic
 ];
 
 export * from './pizzas-epics';
