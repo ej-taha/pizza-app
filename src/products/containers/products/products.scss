@@ -1,15 +1,11 @@
-:host {
-   display: block;
- }
- .products {
+
+.products {
    position: relative;
    &__new {
-     margin: -35px -35px 35px;
-     background: #f9f9f9;
+     background: #23292d;
      padding: 35px;
      display: flex;
      justify-content: center;
-     align-items: center;
    }
    &__list {
       display: flex;

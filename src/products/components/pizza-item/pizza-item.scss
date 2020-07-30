@@ -3,16 +3,17 @@
    display: flex;
    justify-content: center;
    align-items: center;
-   margin: 4px 10px;
+   margin: 7px 7px;
    padding: 20px 10px;
    border-radius: 4px;
-   background: #f5f5f5;
+   background: #23292d;
+   box-shadow: 0 0 3pt 2pt #520c0e;
    transition: 0.2s all ease;
    &:hover {
       transform: scale(1.05);
    }
    a {
-     color: #333;
+     color: rgb(233, 233, 233);
    }
    h4 {
      margin: 10px 0;

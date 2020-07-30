@@ -64,16 +64,19 @@ h4 {
   transition: all 0.2s ease;
 }
 .btn__ok {
-  background: #0f9675;
-  color: #fff;
+  background: #2F4F4F;
+  color: rgb(233, 233, 233);
 }
 .btn__ok:hover {
-  background: #0a7d61;
+  background: #233b3b;
+  color: rgb(233, 233, 233);
+  transform: scale(1.04);
 }
 .btn__warning {
-  background: #ab131c;
-  color: #fff;
+  background: #830c14;
+  color: rgb(233, 233, 233);
 }
 .btn__warning:hover {
-  background: #880c14;
+  background: #520c0e;
+  color: rgb(233, 233, 233);
 }

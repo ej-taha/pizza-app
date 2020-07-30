@@ -2,16 +2,15 @@
    &__nav {
      border-radius: 4px 4px 0 0;
      text-align: center;
-     background: #ab131b;
+     background: #520c0e;
      display: flex;
      justify-content: center;
-     align-items: center;
      &__link {
-       color: #fff;
-       padding: 15px 35px;
+       color: rgb(233, 233, 233);
+       padding: 15px 26px;
        font-family: 'cornerstone';
        &.active {
-         background: #921217;
+         border-bottom: 3px solid rgb(233, 233, 233);
        }
      }
    }

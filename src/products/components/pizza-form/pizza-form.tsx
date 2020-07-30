@@ -68,6 +68,7 @@ export const PizzaForm: FunctionComponent<Props> = ({ pizza, toppings, selected,
                   onChange={(e) => handleNameChange(e)}
                />
             </label>
+            <hr />
 
             {children}
 
