@@ -1,0 +1,17 @@
+.app {
+   &__menu {
+     border-radius: 4px 4px 0 0;
+     text-align: center;
+     background: #520c0e;
+     display: flex;
+     justify-content: center;
+     &__link {
+       color: rgb(233, 233, 233);
+       padding: 15px 26px;
+       font-family: 'cornerstone';
+       &.active {
+         border-bottom: 3px solid rgb(233, 233, 233);
+       }
+     }
+   }
+}

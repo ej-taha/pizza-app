@@ -50,9 +50,9 @@ const App = () => {
       <Provider store={store}>
          <ConnectedRouter history={history}>
             <div className='app'>
-               <appComponents.Header checkingSession={checkingSession} isAuthenticated={isAuthenticated} />
+               <appComponents.Navbar checkingSession={checkingSession} isAuthenticated={isAuthenticated} />
                <div className='app__content'>
-                  <appComponents.Navbar />
+                  <appComponents.AppMenu />
                   <div className='app__container'>
                      <Switch>
                         <Route exact={true} path='/products' component={productsComponents.Products} />

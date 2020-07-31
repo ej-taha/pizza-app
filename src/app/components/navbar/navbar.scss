@@ -1,17 +1,36 @@
 .app {
-   &__nav {
-     border-radius: 4px 4px 0 0;
-     text-align: center;
-     background: #520c0e;
-     display: flex;
-     justify-content: center;
-     &__link {
-       color: rgb(233, 233, 233);
-       padding: 15px 26px;
-       font-family: 'cornerstone';
-       &.active {
-         border-bottom: 3px solid rgb(233, 233, 233);
-       }
-     }
+   &__header {
+      position: relative;
+      text-align: center;
    }
+   &__logo {
+      padding-bottom: 35px;
+      width: 75px;
+   }
+   &__corner {
+      position: absolute;
+      top: 0;
+      right: 0;
+   }
+   &__navbar {
+      height: var(--nav-size);
+      padding: 0 1rem;
+      border-radius: 4px 4px 0 0;
+      text-align: center;
+      background: #23292d;
+      &__item {
+         display: flex;
+         justify-content: flex-end;
+         max-width: 100%;
+         height: 100%;
+         color: #fff;
+         padding: 15px 35px;
+         font-family: 'cornerstone';
+         cursor: pointer;
+         &.active {
+            background: #921217;
+         }
+      }
+   }
+   
 }

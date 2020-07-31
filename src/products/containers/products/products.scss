@@ -2,8 +2,9 @@
 .products {
    position: relative;
    &__new {
+      margin-bottom: 20px;
      background: #23292d;
-     padding: 35px;
+     padding: 15px;
      display: flex;
      justify-content: center;
    }
